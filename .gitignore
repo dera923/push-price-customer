@@ -1,0 +1,34 @@
+# Python関連
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# データファイル（大きいファイルは除外）
+data/raw/
+*.csv
+*.parquet
+!data/sample_data.csv  # サンプルは含める
+
+# 結果ファイル
+results/
+*.png
+*.jpg
+*.pdf
+
+# IDE関連
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS関連
+.DS_Store
+Thumbs.db
+
+# ログ
+*.log
