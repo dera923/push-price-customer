@@ -1,0 +1,22 @@
+[project]
+name = "push-price-customer"
+version = "0.1.0"
+description = "因果推論による配信・価格施策最適化"
+authors = [
+    {name = "dera923"}
+]
+requires-python = ">=3.9,<3.13"
+dependencies = [
+]
+
+
+[build-system]
+requires = ["poetry-core>=2.0.0,<3.0.0"]
+build-backend = "poetry.core.masonry.api"
+[tool.poetry]
+package-mode = false
+
+[tool.poetry.group.dev.dependencies]
+mypy = "^1.17.1"
+types-requests = "^2.32.4.20250809"
+
