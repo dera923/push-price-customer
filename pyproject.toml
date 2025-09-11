@@ -5,8 +5,12 @@ description = "因果推論による配信・価格施策最適化"
 authors = [
     {name = "dera923"}
 ]
-requires-python = ">=3.9,<3.13"
+requires-python = ">=3.10,<3.14"
 dependencies = [
+    "pytest (>=8.4.2,<9.0.0)",
+    "black (>=25.1.0,<26.0.0)",
+    "flake8 (>=7.3.0,<8.0.0)",
+    "scikit-learn (>=1.7.2,<2.0.0)"
 ]
 
 
