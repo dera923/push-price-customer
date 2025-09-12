@@ -1,0 +1,33 @@
+{
+  "generation_time": "2025-09-12T10:08:14.019116",
+  "config": {
+    "n_customers": 10000,
+    "n_products": 2000,
+    "n_categories": 20,
+    "n_latent_factors": 8,
+    "sparsity_rate": 0.92,
+    "noise_std": 0.05,
+    "time_periods": 365,
+    "random_seed": 42
+  },
+  "factor_names": [
+    "price_sensitivity",
+    "brand_loyalty",
+    "category_food",
+    "category_beauty",
+    "frequency_high",
+    "seasonal_winter",
+    "premium_preference",
+    "impulse_buying"
+  ],
+  "data_shape": {
+    "customers": 10000,
+    "products": 2000,
+    "purchase_matrix_shape": [
+      10000,
+      2000
+    ],
+    "sparsity_rate": 0.46680525,
+    "true_rank": 8
+  }
+}
