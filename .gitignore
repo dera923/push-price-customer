@@ -30,3 +30,5 @@ poetry.lock
 # OS
 .DS_Store
 Thumbs.db
+data/customer/samples/purchase_matrix_sparse.npz
+data/customer/samples/purchase_matrix_dense.npy
