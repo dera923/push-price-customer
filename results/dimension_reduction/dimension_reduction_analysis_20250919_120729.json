@@ -1,0 +1,281 @@
+{
+  "data_info": {
+    "shape": [
+      3000,
+      1000
+    ],
+    "sparsity": 0.46084433333333336,
+    "condition_number": 34.389562746512894,
+    "feature_names": null,
+    "sample_names": null
+  },
+  "individual_results": {
+    "SVD": {
+      "performance_metrics": {
+        "explained_variance_ratio": [
+          0.2437183729868497,
+          0.06739242854478222,
+          0.06613871349344279,
+          0.0612413013274327,
+          0.054959952673263326,
+          0.03415252796573589,
+          0.03262815304411439,
+          0.031880551870932076,
+          0.031690126563722616,
+          0.03082464722316976,
+          0.030721455194652147,
+          0.03050006178975675
+        ],
+        "cumulative_variance_ratio": [
+          0.2437183729868497,
+          0.31111080153163195,
+          0.37724951502507476,
+          0.4384908163525075,
+          0.4934507690257708,
+          0.5276032969915067,
+          0.560231450035621,
+          0.5921120019065531,
+          0.6238021284702757,
+          0.6546267756934455,
+          0.6853482308880977,
+          0.7158482926778544
+        ],
+        "total_variance_explained": 0.7158482926778544
+      },
+      "efficiency_metrics": {
+        "fit_time": 0.023232221603393555,
+        "transform_time": 0.011506319046020508,
+        "memory_usage_mb": 10.8203125
+      },
+      "quality_metrics": {
+        "original_sparsity": 0.4610048888888889,
+        "transformed_sparsity": 0.0,
+        "sparsity_preservation": 0.0,
+        "condition_number": 2.8267914919618,
+        "component_variance_balance": 0.15607114875098033,
+        "min_component_variance": 0.08627628787867402,
+        "max_component_variance": 0.6668221384795513
+      },
+      "interpretability_metrics": {}
+    },
+    "PCA": {
+      "performance_metrics": {
+        "explained_variance_ratio": [
+          0.017679612951947154,
+          0.005328103362020046,
+          0.005087379311857469,
+          0.004758008697378774,
+          0.004604340542681812,
+          0.003398716786510466,
+          0.0031383199899368422,
+          0.002735507335601404,
+          0.00271048548978095,
+          0.002663276710219544,
+          0.0026495385982332463,
+          0.002634540525076832
+        ],
+        "cumulative_variance_ratio": [
+          0.017679612951947154,
+          0.0230077163139672,
+          0.02809509562582467,
+          0.032853104323203444,
+          0.03745744486588526,
+          0.04085616165239572,
+          0.043994481642332564,
+          0.04672998897793397,
+          0.04944047446771492,
+          0.05210375117793446,
+          0.05475328977616771,
+          0.057387830301244544
+        ],
+        "total_variance_explained": 0.057387830301244544
+      },
+      "efficiency_metrics": {
+        "fit_time": 0.2538588047027588,
+        "transform_time": 0.038240909576416016,
+        "memory_usage_mb": 5.93359375
+      },
+      "quality_metrics": {
+        "original_sparsity": 0.4610048888888889,
+        "transformed_sparsity": 0.0,
+        "sparsity_preservation": 0.0,
+        "component_variance_balance": 0.15146520723643395,
+        "min_component_variance": 0.09936917225573132,
+        "max_component_variance": 0.6668367740463823
+      },
+      "interpretability_metrics": {}
+    },
+    "NMF": {
+      "performance_metrics": {},
+      "efficiency_metrics": {
+        "fit_time": 35.87898325920105,
+        "transform_time": 2.3813791275024414,
+        "memory_usage_mb": 17.29296875
+      },
+      "quality_metrics": {
+        "original_sparsity": 0.4610048888888889,
+        "transformed_sparsity": 0.2614814814814815,
+        "sparsity_preservation": 0.5671989338588198,
+        "component_variance_balance": 226.0768906998057,
+        "min_component_variance": 0.05768019382602871,
+        "max_component_variance": 829.8780015309966
+      },
+      "interpretability_metrics": {
+        "factor_importance": [
+          4.6473532532837725,
+          3.2658784169053336,
+          2.8841803852362156,
+          2.5362388810911796,
+          1.9468328550463008,
+          1.6238148466085998,
+          1.294094612399562,
+          1.1417132200190687,
+          0.29343548125633245,
+          5.616954290919998,
+          13.343068031748487,
+          32.919586405223114
+        ],
+        "factor_sparsity": [
+          0.363,
+          0.346,
+          0.31,
+          0.335,
+          0.321,
+          0.314,
+          0.38,
+          0.398,
+          0.297,
+          0.377,
+          0.325,
+          0.318
+        ],
+        "interpretability_score": 0.3403333333333334
+      }
+    }
+  },
+  "comparison": {
+    "performance_ranking": {
+      "total_variance_explained": [
+        {
+          "method": "SVD",
+          "value": 0.7158482926778544
+        },
+        {
+          "method": "PCA",
+          "value": 0.057387830301244544
+        }
+      ]
+    },
+    "efficiency_ranking": {
+      "fit_time": [
+        {
+          "method": "SVD",
+          "value": 0.023232221603393555
+        },
+        {
+          "method": "PCA",
+          "value": 0.2538588047027588
+        },
+        {
+          "method": "NMF",
+          "value": 35.87898325920105
+        }
+      ],
+      "transform_time": [
+        {
+          "method": "SVD",
+          "value": 0.011506319046020508
+        },
+        {
+          "method": "PCA",
+          "value": 0.038240909576416016
+        },
+        {
+          "method": "NMF",
+          "value": 2.3813791275024414
+        }
+      ],
+      "memory_usage_mb": [
+        {
+          "method": "PCA",
+          "value": 5.93359375
+        },
+        {
+          "method": "SVD",
+          "value": 10.8203125
+        },
+        {
+          "method": "NMF",
+          "value": 17.29296875
+        }
+      ]
+    },
+    "trade_off_analysis": {
+      "SVD": {
+        "accuracy_score": 1.0,
+        "efficiency_score": 0.9772952599489205,
+        "interpretability_score": 0.0,
+        "overall_score": 0.6931885779846761
+      },
+      "PCA": {
+        "accuracy_score": 1.0,
+        "efficiency_score": 0.7975379653987924,
+        "interpretability_score": 0.0,
+        "overall_score": 0.6392613896196377
+      },
+      "NMF": {
+        "accuracy_score": 1.0,
+        "efficiency_score": 0.0271157150123033,
+        "interpretability_score": 0.3403333333333334,
+        "overall_score": 0.510234714503691
+      }
+    },
+    "use_case_recommendations": {
+      "highest_accuracy": null,
+      "fastest_computation": "SVD",
+      "memory_efficient": "PCA",
+      "interpretable": "NMF"
+    }
+  },
+  "recommendation": {
+    "primary_recommendation": {
+      "method": "PCA",
+      "reason": "中規模データで分散解釈が重要。理論的に最適な次元削減",
+      "confidence": 0.85
+    },
+    "all_recommendations": [
+      {
+        "method": "PCA",
+        "reason": "中規模データで分散解釈が重要。理論的に最適な次元削減",
+        "confidence": 0.85
+      },
+      {
+        "method": "SVD",
+        "reason": "実測結果で総合スコア最高（0.693）",
+        "confidence": 0.95
+      }
+    ],
+    "data_characteristics": {
+      "size": "3,000 x 1,000",
+      "sparsity": "46.1%",
+      "has_negative_values": "False",
+      "size_category": "large"
+    }
+  },
+  "analysis_config": {
+    "n_components": 12,
+    "test_size_ratio": 0.25,
+    "cross_validation_folds": 5,
+    "evaluation_metrics": [
+      "reconstruction_error",
+      "explained_variance",
+      "sparsity_ratio",
+      "computation_time",
+      "memory_usage",
+      "interpretability_score"
+    ],
+    "save_results": true,
+    "output_dir": "results/dimension_reduction",
+    "random_state": 42
+  }
+}

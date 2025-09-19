@@ -1,12 +1,12 @@
 {
-  "generation_time": "2025-09-12T10:08:14.019116",
+  "generation_time": "2025-09-19T12:06:50.797949",
   "config": {
-    "n_customers": 10000,
-    "n_products": 2000,
-    "n_categories": 20,
+    "n_customers": 3000,
+    "n_products": 1000,
+    "n_categories": 50,
     "n_latent_factors": 8,
-    "sparsity_rate": 0.92,
-    "noise_std": 0.05,
+    "sparsity_rate": 0.9,
+    "noise_std": 0.1,
     "time_periods": 365,
     "random_seed": 42
   },
@@ -21,13 +21,13 @@
     "impulse_buying"
   ],
   "data_shape": {
-    "customers": 10000,
-    "products": 2000,
+    "customers": 3000,
+    "products": 1000,
     "purchase_matrix_shape": [
-      10000,
-      2000
+      3000,
+      1000
     ],
-    "sparsity_rate": 0.46680525,
+    "sparsity_rate": 0.46084433333333336,
     "true_rank": 8
   }
 }
