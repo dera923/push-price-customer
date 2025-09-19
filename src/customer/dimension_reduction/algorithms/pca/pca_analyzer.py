@@ -651,10 +651,23 @@ def demonstrate_pca():
     benchmark_results = analyzer.benchmark_algorithms(X)
     
     for algo, results in benchmark_results.items():
-        if "error" not in results:
-            print(f"{algo}: {results['execution_time']:.3f}秒, "
-                  f"累積寄与率90%達成成分数: {np.where(results['cumulative_variance'] >= 0.9)[0][0] + 1}")
-    
+      if "error" in results:
+        print(f"{algo}: エラー発生 → {results['error']}")
+        continue
+
+    # ---- 安全アクセス（キーが無くても落ちない）----
+      cum = np.asarray(results.get("cumulative_variance", []))
+      exec_time = results.get("execution_time", results.get("elapsed", results.get("time", None)))
+      exec_str = f"{exec_time:.3f}秒" if isinstance(exec_time, (int, float)) else "N/A"
+
+      if cum.size > 0 and cum[-1] >= 0.9:
+        k90 = int(np.searchsorted(cum, 0.9) + 1)     # 最初に0.9に到達する位置(1始まり)
+        print(f"{algo}: {exec_str}, 累積寄与率90%達成成分数: {k90}")
+      else:
+        max_cum = float(cum[-1]) if cum.size > 0 else 0.0
+        print(f"{algo}: {exec_str}, 累積寄与率90%達成成分数: 未達（最大 {max_cum:.1%}）")
+
+
     return analyzer, X, X_transformed
 
 
