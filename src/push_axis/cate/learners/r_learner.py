@@ -296,7 +296,7 @@ class RLearner:
         
         # 影響関数の計算
         # ψ(O) = Ỹ - τ(X) * Ã  
-        prediction_residuals = self.residual_Y - cate_pred * self.residual_A
+        prediction_residuals = self.residual_Y[:cate_pred.shape[0]] - cate_pred * self.residual_A[:cate_pred.shape[0]]
         
         # 分散計算用の重み
         variance_weights = self.residual_A ** 2
@@ -373,7 +373,7 @@ def test_r_learner():
     
     # サンプルデータの読み込み
     try:
-        from sample_data_generator import generate_sample_data
+        from src.push_axis.cate.utils.data_preprocessing import generate_sample_data
         train_data, test_data, _ = generate_sample_data()
     except ImportError:
         print("⚠️ sample_data_generatorが見つかりません。ダミーデータで実行...")
@@ -395,12 +395,13 @@ def test_r_learner():
     
     # 特徴量の準備
     feature_cols = ['age', 'gender', 'purchase_count', 'avg_purchase_amount', 'app_usage', 'region']
-    X_train = train_data[feature_cols].values
-    y_train = train_data['outcome'].values
-    treatment_train = train_data['treatment'].values
+    feature_cols = train_data["X"].columns.tolist()
+    X_train = train_data["X"][feature_cols].values
+    y_train = train_data["Y"].values
+    treatment_train = train_data["T"].values
     
-    X_test = test_data[feature_cols].values
-    true_cate_test = test_data['true_cate'].values
+    X_test = test_data["X"][feature_cols].values
+    true_cate_test = test_data["tau"].values
     
     # R-Learner学習
     rl = RLearner(n_folds=5, random_state=42)
@@ -408,14 +409,14 @@ def test_r_learner():
     
     # ATE推定
     ate_estimate = rl.predict_ate()
-    true_ate = train_data['true_cate'].mean()
+    true_ate = train_data["tau"].mean()
     print(f"\n📊 ATE推定結果（Robinson分解）:")
     print(f"   真のATE: {true_ate:.4f}")
     print(f"   推定ATE: {ate_estimate:.4f}")
     print(f"   誤差: {abs(ate_estimate - true_ate):.4f}")
     
     # CATE予測
-    cate_pred, ci_lower, ci_upper = rl.compute_confidence_intervals(X_test[:100])
+    cate_pred, ci_lower, ci_upper = rl.compute_confidence_intervals(X_test)
     
     # 性能評価
     performance = rl.evaluate_performance(X_test, true_cate_test)

@@ -428,7 +428,7 @@ def test_dr_learner():
     
     # サンプルデータの準備
     try:
-        from sample_data_generator import generate_sample_data
+        from src.push_axis.cate.utils.data_preprocessing import generate_sample_data
         train_data, test_data, _ = generate_sample_data()
     except ImportError:
         print("⚠️ sample_data_generatorが見つかりません。ダミーデータで実行...")
@@ -449,12 +449,13 @@ def test_dr_learner():
     
     # データ準備
     feature_cols = ['age', 'gender', 'purchase_count', 'avg_purchase_amount', 'app_usage', 'region']
-    X_train = train_data[feature_cols].values
-    y_train = train_data['outcome'].values
-    treatment_train = train_data['treatment'].values
+    feature_cols = train_data["X"].columns.tolist()
+    X_train = train_data["X"][feature_cols].values
+    y_train = train_data["Y"].values
+    treatment_train = train_data["T"].values
     
-    X_test = test_data[feature_cols].values
-    true_cate_test = test_data['true_cate'].values
+    X_test = test_data["X"][feature_cols].values
+    true_cate_test = test_data["tau"].values
     
     # DR-Learner学習
     dr = DRLearner(n_folds=5, random_state=42, trim_eps=0.02)
@@ -462,7 +463,7 @@ def test_dr_learner():
     
     # ATE推定（信頼区間付き）
     ate_est, ate_ci_lower, ate_ci_upper = dr.compute_ate_confidence_interval()
-    true_ate = train_data['true_cate'].mean()
+    true_ate = train_data["tau"].mean()
     print(f"\n📊 ATE推定結果（二重頑健）:")
     print(f"   真のATE: {true_ate:.4f}")
     print(f"   推定ATE: {ate_est:.4f} [{ate_ci_lower:.4f}, {ate_ci_upper:.4f}]")

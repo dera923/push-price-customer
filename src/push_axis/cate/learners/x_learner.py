@@ -344,17 +344,19 @@ def test_x_learner():
     print("🧪 X-Learner テスト実行...")
     
     # サンプルデータ生成（前のコードから）
-    from sample_data_generator import generate_sample_data
+    from src.push_axis.cate.utils.data_preprocessing import generate_sample_data
     train_data, test_data, _ = generate_sample_data()
     
     # 特徴量とターゲットを分離
     feature_cols = ['age', 'gender', 'purchase_count', 'avg_purchase_amount', 'app_usage', 'region']
-    X_train = train_data[feature_cols].values
-    y_train = train_data['outcome'].values
-    treatment_train = train_data['treatment'].values
+    feature_cols = train_data["X"].columns.tolist()
+    feature_cols = train_data["X"].columns.tolist()
+    X_train = train_data["X"][feature_cols].values
+    y_train = train_data["Y"].values
+    treatment_train = train_data["T"].values
     
-    X_test = test_data[feature_cols].values
-    true_cate_test = test_data['true_cate'].values
+    X_test = test_data["X"][feature_cols].values
+    true_cate_test = test_data["tau"].values
     
     # X-Learner学習
     xl = XLearner(n_folds=5, random_state=42)
@@ -362,7 +364,7 @@ def test_x_learner():
     
     # ATE推定
     ate_estimate = xl.predict_ate()
-    true_ate = train_data['true_cate'].mean()
+    true_ate = train_data["tau"].mean()
     print(f"\n📊 ATE推定結果:")
     print(f"   真のATE: {true_ate:.4f}")
     print(f"   推定ATE: {ate_estimate:.4f}")

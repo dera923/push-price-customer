@@ -245,3 +245,94 @@ if __name__ == "__main__":
     print("\n💾 データを保存しました:")
     print("   - sample_train_data.csv")
     print("   - sample_test_data.csv")
+
+# ====== synthetic data generator (for CATE) ======
+from dataclasses import dataclass
+import numpy as np
+
+@dataclass
+class DataConfig:
+    n_customers: int = 2000
+    n_features: int = 8
+    random_state: int = 42
+
+def make_synthetic_data(cfg: DataConfig = DataConfig()):
+    """
+    返り値: X, T, Y, tau
+      X: (n_customers, n_features) 特徴量
+      T: (n_customers,) 0/1 の処置フラグ
+      Y: (n_customers,) 目的変数
+      tau: (n_customers,) 真の個別処置効果（評価用）
+    """
+    rng = np.random.default_rng(cfg.random_state)
+    X = rng.normal(0, 1, (cfg.n_customers, cfg.n_features))
+    T = rng.integers(0, 2, cfg.n_customers)
+
+    # 真の効果 tau（例：一部特徴で線形に依存）
+    tau = 0.5 + 0.3 * X[:, 0] - 0.2 * X[:, 1]
+
+    # 潜在アウトカム
+    beta = rng.normal(0, 0.3, cfg.n_features)
+    eps  = rng.normal(0, 1, cfg.n_customers)
+    Y0 = X @ beta + eps
+    Y1 = Y0 + tau
+
+    Y = np.where(T == 1, Y1, Y0)
+    return X, T, Y, tau
+
+# 互換：昔の import 名をそのまま動かす
+generate_sample_data = make_synthetic_data
+def generate_sample_data(test_size: float = 0.3, random_state: int = 42, cfg: DataConfig = DataConfig()):
+    """
+    Returns:
+        train_data: dict {"X","T","Y","tau"}
+        test_data : dict {"X","T","Y","tau"}
+        meta      : dict （設定など）
+    """
+    # ベース生成（4タプル）
+    X, T, Y, tau = make_synthetic_data(cfg)
+
+    # 学習/評価に使いやすいように分割（処置の比率を保つ）
+    try:
+        from sklearn.model_selection import train_test_split
+        idx = np.arange(len(T))
+        tr, te = train_test_split(idx, test_size=test_size, random_state=random_state, stratify=T)
+        def pack(ix):
+            return {"X": X[ix], "T": T[ix], "Y": Y[ix], "tau": tau[ix]}
+        return pack(tr), pack(te), {"config": cfg}
+    except Exception:
+        # sklearn が無い場合でも最低限動くフォールバック（単純分割）
+        n = len(T)
+        cut = int(n * (1 - test_size))
+        def pack(slice_):
+            return {"X": X[slice_], "T": T[slice_], "Y": Y[slice_], "tau": tau[slice_]}
+        return pack(slice(0, cut)), pack(slice(cut, n)), {"config": cfg}
+
+# === DataFrame 版（テストコード互換） generate_sample_data ===
+import pandas as pd
+
+def generate_sample_data(test_size: float = 0.3, random_state: int = 42, cfg: DataConfig = DataConfig()):
+    # 4タプルを生成
+    X, T, Y, tau = make_synthetic_data(cfg)
+
+    # インデックスを train/test に分割（Tで層化。sklearn無ければフォールバック）
+    try:
+        from sklearn.model_selection import train_test_split
+        idx = np.arange(len(T))
+        tr, te = train_test_split(idx, test_size=test_size, random_state=random_state, stratify=T)
+    except Exception:
+        n = len(T)
+        cut = int(n * (1 - test_size))
+        tr = np.arange(0, cut)
+        te = np.arange(cut, n)
+
+    # DataFrame/Series にパック（列名は f0..f{d-1}）
+    def pack(ix):
+        return {
+            "X": pd.DataFrame(X[ix], columns=[f"f{i}" for i in range(X.shape[1])]),
+            "T": pd.Series(T[ix], name="treatment"),
+            "Y": pd.Series(Y[ix], name="outcome"),
+            "tau": pd.Series(tau[ix], name="tau"),
+        }
+
+    return pack(tr), pack(te), {"config": cfg}
