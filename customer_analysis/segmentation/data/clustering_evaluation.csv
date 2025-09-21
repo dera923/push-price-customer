@@ -1,0 +1,3 @@
+Algorithm,N_Clusters,N_Noise,Noise_Ratio,Silhouette_Score,Calinski_Harabasz_Score,Davies_Bouldin_Score
+K-means,4,0,0.0,0.36221516520559854,4658.294574652868,0.9057612827557425
+Hierarchical,10,0,0.0,0.2847979615848576,3708.5981025444626,1.020709649036459

@@ -1,0 +1,48 @@
+{
+  "original_features": [
+    "Recency",
+    "Frequency",
+    "Monetary",
+    "AOV",
+    "Avg_Discount",
+    "Avg_Items"
+  ],
+  "final_features": [
+    "PC1",
+    "PC2"
+  ],
+  "scaling_method": "power",
+  "scaling_analysis": {
+    "Recency": {
+      "skewness": 1.3383186175787458,
+      "outlier_pct": 3.92
+    },
+    "Frequency": {
+      "skewness": 1.7558260015266516,
+      "outlier_pct": 3.84
+    },
+    "Monetary": {
+      "skewness": 3.2710425163466055,
+      "outlier_pct": 11.34
+    },
+    "AOV": {
+      "skewness": 2.591016772698217,
+      "outlier_pct": 4.68
+    },
+    "Avg_Discount": {
+      "skewness": 5.2573056991129645,
+      "outlier_pct": 4.88
+    },
+    "Avg_Items": {
+      "skewness": 0.6983438876461351,
+      "outlier_pct": 2.02
+    }
+  },
+  "pca_explained_variance": [
+    0.6026500239808549,
+    0.16555731758053388
+  ],
+  "total_variance_explained": 0.7682073415613888,
+  "n_components": 2,
+  "vif_results": null
+}
